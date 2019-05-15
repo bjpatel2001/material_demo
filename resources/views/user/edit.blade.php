@@ -102,6 +102,102 @@
             </div>
         </div>
     </div>
+
+    <section id="content">
+        <div class="container">
+            <div class="section">
+                {{--<p class="caption">USER PROFILE</p>
+                <div class="divider"></div>--}}
+                @if (count($errors) > 0)
+                    <div id="card-alert" class="card red">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <div class="row">
+                    <div class="col s12 m12 112">
+                        <div class="card-panel">
+                            <h4 class="header2">USER MANAGMENT</h4>
+                            <div class="row">
+                                <form action="{{url('/user/store')}}" name="app_add_form" id="app_form" method="post" class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <input name="first_name" id="first_name" type="text" value="{{old('first_name')}}" required />
+                                            <label for="first_name">First Name</label>
+                                        </div>
+
+                                        <div class="input-field col s6">
+                                            <input name="last_name" id="last_name" type="text" value="{{old('last_name')}}" required />
+                                            <label for="last_name">Last Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <input name="email" id="email" type="email" autocomplete="off" value="{{old('email')}}" required />
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <input id="password" type="password" name="password" value="{{old('password')}}" required />
+                                            <label for="password">Password</label>
+                                        </div>
+                                        <div class="input-field col s6">
+                                            <input id="confirm_password" type="password" name="confirm_password" value="{{old('confirm_password')}}" />
+                                            <label for="confirm_password">Confirm Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s6">
+                                            <select required name="role_id" id="role_id">
+                                                <option value="">{{trans('app.select')}} {{trans('app.role')}}</option>
+                                                @if(count($roleData) > 0)
+                                                    @foreach($roleData as $row)
+                                                        <option value="{{$row->id}}">{{$row->code}}</option>
+                                                    @endforeach
+                                                @endif
+                                            </select>
+                                            <label>{{trans('app.user')}} {{trans('app.role')}}</label>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <div class="switch">
+
+                                                    <label>
+                                                        <input name="status" checked id="swt1" type="checkbox" value="1">
+                                                        <span class="lever"></span>
+                                                        Status
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <button class="btn cyan waves-effect waves-light right" type="submit" name="action">{{trans('app.add')}} {{trans('app.user')}}
+                                                    <i class="mdi-content-send right"></i>
+                                                </button>
+                                            </div>
+                                            <div class="input-field col s6">
+                                                <a href="{{url('/user/list')}}" class="btn btn-space btn-lg red darken-4">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </section>
 @endsection
 
 @push('externalJsLoad')

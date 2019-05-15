@@ -7,41 +7,34 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{!! asset('img/favicon.png') !!}">
-    <link rel="apple-touch-icon" sizes="57x57" href="{{url('img/favicon/apple-icon-57x57.png')}}">
-    <link rel="apple-touch-icon" sizes="60x60" href="{{url('img/favicon/apple-icon-60x60.png')}}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{url('img/favicon/apple-icon-72x72.png')}}">
-    <link rel="apple-touch-icon" sizes="76x76" href="{{url('img/favicon/apple-icon-76x76.png')}}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{url('img/favicon/apple-icon-114x114.png')}}">
-    <link rel="apple-touch-icon" sizes="120x120" href="{{url('img/favicon/apple-icon-120x120.png')}}">
-    <link rel="apple-touch-icon" sizes="144x144" href="{{url('img/favicon/apple-icon-144x144.png')}}">
-    <link rel="apple-touch-icon" sizes="152x152" href="{{url('img/favicon/apple-icon-152x152.png')}}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{url('img/favicon/apple-icon-180x180.png')}}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{url('img/favicon/android-icon-192x192.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{url('img/favicon/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{url('img/favicon/favicon-96x96.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('img/favicon/favicon-16x16.png')}}">
+
     <link rel="manifest" href="{{url('img/favicon/manifest.json')}}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="{{url('img/favicon/ms-icon-144x144.png')}}">
-    <meta name="theme-color" content="#ffffff">
     <title>@yield('pageTitle')</title>
-    <link rel="stylesheet" type="text/css" href="{{url('css/plugins/perfect-scrollbar.min.css')}}" />
-    <link rel="stylesheet" type="text/css" href="{{url('css/plugins/material-design-iconic-font.min.css')}}" />
-    {{--<link rel="stylesheet" type="text/css" href="{{url('css/plugins/jquery.dataTables.min.css')}}" />--}}
+    <link rel="icon" href="{{url('material/images/favicon/favicon-32x32.png')}}" sizes="32x32">
+    <!-- Favicons-->
+    <link rel="apple-touch-icon-precomposed" href="{{url('material/images/favicon/apple-touch-icon-152x152.png')}}">
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#00bcd4">
+    <meta name="msapplication-TileImage" content="{{url('material/images/favicon/mstile-144x144.png')}}">
+
+    <!-- Core CSS-->
+
+    <link rel="stylesheet" type="text/css" href="{{url('material/css/materialize.css')}}" media="screen,projection" />
+    <link rel="stylesheet" type="text/css" href="{{url('material/css/style.css')}}" media="screen,projection" />
+    <link rel="stylesheet" type="text/css" href="{{url('material/css/custom/custom-style.css')}}" media="screen,projection" />
+
     <link rel="stylesheet" type="text/css" href="{{url('css/plugins/dataTables.bootstrap.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('css/plugins/jquery.loadmask.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('css/plugins/responsive.dataTables.min.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('css/plugins/select.dataTables.min.css')}}" />
-    <link rel="stylesheet" href="{{url('css/style.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{url('css/custom.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{url('css/plugins/font-awesome.min.css')}}" type="text/css" />
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="{{url('js/plugins/html5shiv.min.js')}}"></script>
-    <script src="{{url('js/plugins/respond.min.js')}}"></script>
-    <![endif]-->
+
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+    <link href="{{url('material/js/plugins/perfect-scrollbar/perfect-scrollbar.css')}}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{{url('material/js/plugins/jvectormap/jquery-jvectormap.css')}}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{{url('material/js/plugins/chartist-js/chartist.min.css')}}" type="text/css" rel="stylesheet" media="screen,projection">
+
+
+
     @stack('externalCssLoad')
     @stack('internalCssLoad')
     <script type="text/javascript">
@@ -55,45 +48,97 @@
 </head>
 <body>
 
+<div id="loader-wrapper">
+    <div id="loader"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+</div>
+
 <div class="be-wrapper be-collapsible-sidebar">
 
     <div id="load-nav">
         @include('layouts.header')
     </div>
+
+    <div id="main">
+        <!-- START WRAPPER -->
+        <div class="wrapper">
+
     @include('layouts.sidebar')
     <div class="flash-message">
         @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+            <?php
+            if($msg == 'success'){
+              $card = "<div id='card-alert' class='card green'>";
+            }elseif($msg == 'warning' || 'danger'){
+                $card = "<div id='card-alert' class='card red'>";
+            }else{
+                $card = "<div id='card-alert' class='card light-blue'>";
+            }
+            ?>
             @if(Session::has('alert-' . $msg))
-                <p class="alert alert-{{ $msg }}" style="text-align:center;text-transform:capitalize;"><?php echo Session::get('alert-' . $msg);?><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a></p>
+                <?php echo $card; ?>
+                    <div class="card-content white-text">
+                        <p><i class="mdi-alert-error"></i> {{ Session::get('alert-' . $msg) }}</p>
+                    </div>
+                    <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
             @endif
         @endforeach
     </div>
+
     @yield('content')
+
+    @include('layouts.rightsidebar')
+        <!-- END WRAPPER -->
+        </div>
+    </div>
     @include('layouts.footer')
-</div>
 
-<!-- Mainly scripts -->
-<script src="{{url('js/plugins/jquery.min.js')}}" type="text/javascript"></script>
-<script src="{{url('js/plugins/jquery-ui.min.js')}}" type="text/javascript"></script>
-<script src="{{url('js/plugins/perfect-scrollbar.jquery.min.js')}}" type="text/javascript"></script>
-<script src="{{url('js/plugins/bootstrap.min.js')}}" type="text/javascript"></script>
 
+
+
+<!--Material Theme JS Starts-->
+
+<!-- ================================================
+   Scripts
+   ================================================ -->
+
+<!-- jQuery Library -->
+<script src="{{url('material/js/plugins/jquery-1.11.2.min.js')}}" type="text/javascript"></script>
 <script src="{{url('js/plugins/jquery.dataTables.min.js')}}" type="text/javascript"></script>
 <script src="{{url('js/plugins/dataTables.bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{url('js/plugins/dataTables.buttons.js')}}" type="text/javascript"></script>
 <script src="{{url('js/plugins/dataTables.responsive.min.js')}}" type="text/javascript"></script>
 <script src="{{url('js/plugins/dataTables.select.min.js')}}" type="text/javascript"></script>
-<script src="{{url('js/plugins/jquery.loadmask.min.js')}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+<!--materialize js-->
+<script type="text/javascript" src="{{url('material/js/materialize.js')}}"></script>
+<!--prism
+<script type="text/javascript" src="js/prism/prism.js"></script>-->
+<!--scrollbar-->
+<script type="text/javascript" src="{{url('material/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
+
+<!-- chartist -->
+<script type="text/javascript" src="{{url('material/js/plugins/chartist-js/chartist.min.js')}}"></script>
+
+<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+<script type="text/javascript" src="{{url('material/js/plugins.js')}}"></script>
+<!--custom-script.js - Add your own theme custom JS-->
+<script type="text/javascript" src="{{url('material/js/custom-script.js')}}"></script>
+<!--Material Theme JS Ends-->
+
 
 <script src="{{url('js/config.js')}}" type="text/javascript"></script>
-<script src="{{url('js/main.js')}}" type="text/javascript"></script>
 <script src="{{url('js/app.js')}}" type="text/javascript"></script>
 <script src="{{url('js/plugins/validate/jquery.validate.min.js')}}" type="text/javascript"></script>
+
+
 @stack('externalJsLoad')
 @stack('internalJsLoad')
-<script>
-    App.init();
-</script>
 
 </body>
 </html>

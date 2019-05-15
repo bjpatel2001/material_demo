@@ -39,7 +39,7 @@ function isJson(str) {
 
 // Show loading mask
 app.showLoader = function (id) {
-    $((id) ? id : 'body').mask("<img src='" + app.config.SITE_PATH + "/img/loading.svg'");
+    $((id) ? id : 'body').mask("<img src='" + app.config.SITE_PATH + "img/loading.svg'");
 }
 
 // Hide loading mask

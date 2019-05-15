@@ -29,10 +29,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-xs-12">
+
                         <div class="activity-but activity-space pull-left">
-                            {{--<div class="addreport pull-right">
+                            <div class="addreport pull-right">
                                 <a href="{{url('/permission/add')}}"><button class="btn btn-space btn-primary btn-lg hover"><i class="icon mdi mdi-plus "></i>Add Permission</button></a>
-                            </div>--}}
+                            </div>
                             <!--  <div class="btn-group ">
                                   <button type="button " class="btn btn-primary btn-lg active">All</button>
                                   <button type="button" class="btn btn-primary btn-lg">Pending</button>

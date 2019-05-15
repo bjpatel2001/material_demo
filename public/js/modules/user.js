@@ -90,7 +90,7 @@ app.user = {
 
 function checkParentValid() {
     var role = $("#role_id").children("option:selected").text().toLowerCase();
-    if(role == "admin" || role == "coo"){
+    if(role == "admin"){
         $("#parent_id").val('0');
         $("#parent_id").closest("div.form-group").hide();
         return true;

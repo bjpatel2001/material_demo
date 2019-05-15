@@ -5,103 +5,89 @@
 @push('externalCssLoad')
 @endpush
 @push('internalCssLoad')
-<style>
-    .col-sm-6 .control-label{text-align: left !important; font-weight: bold;}
-</style>
 @endpush
 @section('content')
-    <div class="be-content">
+    <!-- START CONTENT -->
+    <section id="content">
+        <div class="container">
+            <div class="section">
+                {{--<p class="caption">USER PROFILE</p>
+                <div class="divider"></div>--}}
+                @if (count($errors) > 0)
+                    <div id="card-alert" class="card red">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-        <div class="main-content container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default panel-border-color panel-border-color-primary">
-                        <div class="panel-heading panel-heading-divider">User Profile</div>
-                        <div class="panel-body">
-                            @if (count($errors) > 0)
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-                            <form action="{{url('/user/update')}}" name="app_profile_form" id="app_form" style="border-radius: 0px;" method="post" class="form-horizontal group-border-dashed">
-
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">First Name </label>
-                                    <div class="col-sm-6 col-md-4">
-                                        <input type="text" name="first_name" id="first_name" placeholder="First Name" class="form-control input-sm required" value="{{$details->first_name}}" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Last Name </label>
-                                    <div class="col-sm-6 col-md-4">
-                                        <input type="text" name="last_name" id="last_name" placeholder="Last Name" class="form-control input-sm required" value="{{$details->last_name}}" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">User Role </label>
-                                    <div class="col-sm-6 col-md-4">
-                                        <label class="col-md-12 control-label">{{($details->Role)?$details->Role->code:"---"}}<label>
-                                        <input type="hidden" name="role_id" id="role_id" placeholder="Employee Code" class="form-control input-sm" value="{{$details->role_id}}" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Reporting Head </label>
-                                    <div class="col-sm-6 col-md-4">
-                                        <label class="col-md-12 control-label">{{($details->ParentUser)?$details->ParentUser->name:"---"}}<label>
-                                        <input type="hidden" name="parent_id" id="parent_id" placeholder="Employee Code" class="form-control input-sm" value="{{$details->parent_id}}" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Email</label>
-                                    <div class="col-sm-6 col-md-4">
-                                        <label class="col-md-12 control-label">{{$details->email}}<label>
-                                        <input type="hidden" name="email" id="email" placeholder="Email Editress" class="form-control input-sm required email" readonly value="{{$details->email}}" />
-                                    </div>
-                                </div>
-
-                                <?php
-                                $status_check = "";
-                                if ($details->status == '1') {
-                                    $status_check = "checked";
-                                }
-                                ?>
-
-                                <div class="form-group" style="display: none;">
-                                    <label class="col-sm-4 control-label">Status<span class="error">*</span></label>
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="switch-button switch-button-lg">
-                                            <input name="status" id="swt1" {{$status_check}} type="checkbox" value="1" />
-                                            <span>
-                                                 <label for="swt1"></label>
-                                             </span>
+                <div class="row">
+                    <div class="col s12 m12 l6">
+                        <div class="card-panel">
+                            <h4 class="header2">USER PROFILE</h4>
+                            <div class="row">
+                                <form action="{{url('/user/update')}}" method="post" class="col s12">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="mdi-action-account-circle prefix"></i>
+                                            <input id="first_name" name="first_name" type="text" required value="{{$details->first_name}}"/>
+                                            <label for="first_name">First Name</label>
                                         </div>
                                     </div>
-                                </div>
-                                <input type="hidden" name="change_redirect_state" id="change_redirect_state" value="1" />
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="mdi-action-account-circle prefix"></i>
+                                            <input id="last_name" name="last_name" type="text" required value="{{$details->last_name}}"/>
+                                            <label for="last_name">Last Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="mdi-communication-email prefix"></i>
+                                            <input id="email" type="email" name="email" value="{{$details->email}}" readonly>
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="mdi-action-account-circle prefix"></i>
+                                            <input id="user_role" type="text" value="{{($details->Role)?$details->Role->code:"---"}}" readonly />
+                                            <input type="hidden" name="role_id" id="role_id"   value="{{$details->role_id}}" />
+                                            <label for="user_role">User Role</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                            <i class="mdi-action-account-circle prefix"></i>
+                                            <input id="parent" type="text" value="{{($details->ParentUser)?$details->ParentUser->name:"---"}}" readonly />
+                                            <input type="hidden" name="parent_id" id="parent_id" value="{{$details->parent_id}}" />
+                                            <label for="parent">Reporting Head</label>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="change_redirect_state" id="change_redirect_state" value="1" />
 
-                                {{ csrf_field() }}
-                                <input type="hidden" name="id" id="id" value="{{$details->id}}" />
-                                <div class="col-sm-6 col-md-8 savebtn">
-                                    <p class="text-right">
-                                        <button type="submit" class="btn btn-space btn-info btn-lg">Update Profile</button>
-                                    </p>
-                                </div>
-
-                            </form>
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="id" id="id" value="{{$details->id}}" />
+                                    <div class="row">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <button class="btn cyan waves-effect waves-light right" type="submit" name="action">UPDATE PROFILE
+                                                    <i class="mdi-content-send right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <!-- END CONTENT -->
+    </section>
 @endsection
 
 @push('externalJsLoad')
