@@ -129,92 +129,84 @@
     <section id="content">
         <div class="container">
             <div class="section">
+                <h4>USER LIST</h4>
                 <div class="row">
-                    <div class="col-sm-12 col-xs-12">
-                        <div class="activity-but activity-space pull-left">
-                            <div class="pull-left">
-                                <a href="javascript:void(0);" class="btn btn-warning func_SearchGridData"><i
-                                            class="icon mdi mdi-search"></i> Search</a>
-                            </div>
-                            <div class>
-                                <a href="javascript:void(0);" class="btn btn-danger func_ResetGridData"
-                                   style="margin-left: 10px;">Reset</a>
-                            </div>
-                            <div class>
-                                <a href="{{url('/user/add')}}">
-                                    <button class="btn btn-space btn-primary"><i
-                                                class="icon mdi mdi-plus "></i> {{trans('app.add')}} {{trans('app.user')}}
-                                    </button>
-                                </a>
-                            </div>
+                    <div class="col s12 m6 l3">
+                        <a href="javascript:void(0);" class="btn btn-warning func_SearchGridData"><i
+                                    class="icon mdi mdi-search"></i> Search</a>
+                    </div>
+                    <div class="col s12 m6 l3">
+                        <span></span>
+                    </div>
+                    <div class="col s12 m6 l3">
+                        <span></span>
+                    </div>
+                    <div class="col s12 m6 l3" style="float: right">
+                        <a href="javascript:void(0);" class="btn btn-danger func_ResetGridData"
+                           >Reset</a>
+                        <a href="{{url('/user/add')}}">
+                            <button class="btn btn-space btn-primary"><i
+                                        class="icon mdi mdi-plus "></i> {{trans('app.add')}} {{trans('app.user')}}
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div id="table-datatables">
+                        <div class="col s12 m8 l9">
+                            <table id="dataTable" class="responsive-table display" cellspacing="0">
+                                <thead>
+
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th class="no-sort">{{trans('app.user')}} Role</th>
+                                    <th>Email Address</th>
+                                    <th>status</th>
+                                    <th class="no-sort">Action</th>
+                                </tr>
+
+                                </thead>
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <input type="text" name="filter[first_name]" style="width: 80px;" id="first_name" value="" />
+                                    </th>
+                                    <th>
+                                        <input type="text" name="filter[last_name]" style="width: 80px;" id="last_name" value="" />
+                                    </th>
+                                    <th>
+                                        <select name="filterSelect[role_id]" id="role_id" style="width: 80px;">
+                                            <option value="">{{trans('app.select')}}</option>
+                                            @if(count($roleData) > 0)
+                                                @foreach($roleData as $row)
+                                                    <option value="{{$row->id}}">{{$row->code}}</option>
+                                                @endforeach
+                                            @endif
+
+                                        </select>
+                                    </th>
+                                    <th>
+                                        <input type="text" name="filter[email]" style="width: 80px;" id="email" value="" />
+                                    </th>
+                                    <th>
+                                        <select name="filterSelect[status]" id="status" style="width: 80px;">
+                                            <option value="">{{trans('app.select')}}</option>
+                                            <option value="1">{{trans('app.active')}}</option>
+                                            <option value="0">{{trans('app.inactive')}}</option>
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <table id="dataTable"
-                       class="table display dt-responsive responsive nowrap table-striped table-hover table-fw-widget"
-                       style="width: 100%;">
-                    {{--<colgroup>
-                        <col width="9%">
-                        <col width="9%">
-                        <col width="9%">
-                        <col width="9%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-                        <col width="10%">
-
-                    </colgroup>--}}
-                    <thead>
-
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th class="no-sort">{{trans('app.user')}} Role</th>
-                        <th>Email Address</th>
-                        <th>status</th>
-                        <th class="no-sort">Action</th>
-                    </tr>
-
-                    </thead>
-                    <thead>
-                    <tr>
-                        <th>
-                            <input type="text" name="filter[first_name]" style="width: 80px;" id="first_name" value="" />
-                        </th>
-                        <th>
-                            <input type="text" name="filter[last_name]" style="width: 80px;" id="last_name" value="" />
-                        </th>
-                        <th>
-                            <select name="filterSelect[role_id]" id="role_id" style="width: 80px;">
-                                <option value="">{{trans('app.select')}}</option>
-                                @if(count($roleData) > 0)
-                                    @foreach($roleData as $row)
-                                        <option value="{{$row->id}}">{{$row->code}}</option>
-                                    @endforeach
-                                @endif
-
-                            </select>
-                        </th>
-                        <th>
-                            <input type="text" name="filter[email]" style="width: 80px;" id="email" value="" />
-                        </th>
-                        <th>
-                            <select name="filterSelect[status]" id="status" style="width: 80px;">
-                                <option value="">{{trans('app.select')}}</option>
-                                <option value="1">{{trans('app.active')}}</option>
-                                <option value="0">{{trans('app.inactive')}}</option>
-                            </select>
-                        </th>
-                        <th></th>
-                    </tr>
-                    </thead>
-
-                    <tbody>
-
-                    </tbody>
-                </table>
             </div>
         </div>
     </section>

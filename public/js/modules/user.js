@@ -8,12 +8,12 @@ app.user = {
         switch: function () {
             $(document).on('click', ".change_status", function () {
                 var status = '1';
-                if ($(this).closest("div.switch-button").children("input:checked").length > '0') {
+                if ($(this).closest("div.switch-button").children("label").children("input:checked").length > '0') {
                     status = '0';
                 }
 
-                var id = $(this).closest("div.switch-button").children("input").attr('rel');
-                var spath = $(this).closest("div.switch-button").children("input").attr('formaction');
+                var id = $(this).closest("div.switch-button").children("label").children("input").attr('rel');
+                var spath = $(this).closest("div.switch-button").children("label").children("input").attr('formaction');
                 var url = app.config.SITE_PATH + spath +'/change_status';
                 app.changeStatus(id, url, status);
             });

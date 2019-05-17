@@ -131,7 +131,7 @@
                 <div class="row">
                     <div class="col s12 m12 112">
                         <div class="card-panel">
-                            <h4 class="header2">USER MANAGMENT</h4>
+                            <h4>USER MANAGMENT</h4>
                             <div class="row">
                                 <form action="{{url('/user/store')}}" name="app_add_form" id="app_form" method="post" class="col s12">
                                     <div class="row">
@@ -176,7 +176,6 @@
                                         <div class="row">
                                             <div class="input-field col s6">
                                                 <div class="switch">
-
                                                     <label>
                                                         <input name="status" checked id="swt1" type="checkbox" value="1">
                                                         <span class="lever"></span>
